@@ -1,0 +1,3 @@
+rootProject.name = 'MAS_HS'
+
+include ':app'
