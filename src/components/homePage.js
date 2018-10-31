@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Card, CardSection, Button } from './common';
+import { Actions } from 'react-native-router-flux';
+import { Card, CardSection, Button, Confirm } from './common';
 import { userFetch } from '../actions';
+
 
 class HomePage extends Component {
     constructor() {
         super();
-        this.state = { adminprivilage: false };
+        this.state = { adminprivilage: false,
+                       showModal: false };
     }
 
     componentWillMount() {
@@ -15,6 +18,9 @@ class HomePage extends Component {
         console.log({ type, name, email, tel });
         if (type === 'admin') {
             this.setState({ adminprivilage: true });
+        }
+        if (this.props.msg) {
+            this.setState({ showModal: true });
         }
     }
 
@@ -26,11 +32,23 @@ class HomePage extends Component {
         }
     }
 
+    onAccept() {
+        this.setState({ showModal: false });
+    }
+
+    onDecline() {
+        this.setState({ showModal: false });
+    }
+
+    onAddUserPress() {
+        Actions.signUpForm();
+    }
+
     render() {
         return (
             <Card>
                 <CardSection>
-                    <Button>
+                    <Button >
                         Incident Reporting
                     </Button>
                 </CardSection>
@@ -65,8 +83,17 @@ class HomePage extends Component {
                     </Button>
                 </CardSection>
                 
+                <Confirm
+                    visible={this.state.showModal}
+                    onAccept={this.onAccept.bind(this)}
+                    onDecline={this.onDecline.bind(this)}
+                >
+                       {this.props.msg}
+                </Confirm>
+                
+
                 {this.state.adminprivilage && (<CardSection>
-                    <Button>
+                    <Button onPress={this.onAddUserPress.bind(this)}>
                         Add User
                     </Button>
                 </CardSection>)}
