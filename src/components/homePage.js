@@ -16,7 +16,7 @@ class HomePage extends Component {
         this.props.userFetch();
         const { type, name, email, tel } = this.props;
         console.log({ type, name, email, tel });
-        if (type === 'admin') {
+        if (type && type === 'admin') {
             this.setState({ adminprivilage: true });
         }
         if (this.props.msg) {
@@ -25,11 +25,20 @@ class HomePage extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const { type, name, email, tel } = nextProps.user;
-        console.log({ type, name, email, tel });
-        if (type === 'admin') {
-            this.setState({ adminprivilage: true });
-        }
+        console.log(nextProps);
+        const { type, name, email, tel } = nextProps;
+            console.log({ type, name, email, tel });
+            if (type && type === 'admin') {
+                this.setState({ adminprivilage: true });
+            }
+        // if (nextProps.user != null) {
+        //     const { type, name, email, tel } = nextProps.user;
+        //     console.log('hi');
+        //     console.log(`typeof ${type, name, email, tel}`);
+        //     if (type && type === 'admin') {
+        //         this.setState({ adminprivilage: true });
+        //     }
+        // }
     }
 
     onAccept() {
@@ -40,15 +49,19 @@ class HomePage extends Component {
         this.setState({ showModal: false });
     }
 
+    onReportingPress() {
+        Actions.reporting();
+    }
+    
     onAddUserPress() {
-        Actions.signUpForm();
+        Actions.signup();
     }
 
     render() {
         return (
             <Card>
                 <CardSection>
-                    <Button >
+                    <Button onPress={this.onReportingPress.bind(this)} >
                         Incident Reporting
                     </Button>
                 </CardSection>
@@ -92,7 +105,7 @@ class HomePage extends Component {
                 </Confirm>
                 
 
-                {this.state.adminprivilage && (<CardSection>
+                {this.state.adminprivilage && (<CardSection style={{ justifyContent: 'flex-end' }}>
                     <Button onPress={this.onAddUserPress.bind(this)}>
                         Add User
                     </Button>
@@ -104,7 +117,7 @@ class HomePage extends Component {
 
 const mapStateToProps = (state) => {
     const { type, name, email, tel } = state.user;
-
+   
     return { type, name, email, tel };
 };
 

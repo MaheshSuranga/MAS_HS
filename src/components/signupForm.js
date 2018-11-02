@@ -97,10 +97,10 @@ class SignupForm extends Component {
                     <Text style={styles.pickerTextStyle}>Type</Text>
                         <Picker
                         selectedValue={this.props.type}
-                        onValueChange={value => this.props.onTypeChange(value)}
+                        onValueChange={value => this.onTypeChange(value)}
                         >
-                            <Picker.Item label='Admin' value='Admin' />
                             <Picker.Item label='Ordinary' value='Ordinary' />
+                            <Picker.Item label='Admin' value='admin' />
                         </Picker>
                 </CardSection>
 

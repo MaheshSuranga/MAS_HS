@@ -3,6 +3,7 @@ import { Router, Scene } from 'react-native-router-flux';
 import LoginForm from './components/loginForm';
 import HomePage from './components/homePage';
 import SignupForm from './components/signupForm';
+import ReportingForm from './components/reportingForm';
 
 const RouterComponent = () => (
         <Router>
@@ -26,6 +27,11 @@ const RouterComponent = () => (
                      key='signup'
                      component={SignupForm}
                      title="Add User"
+                    />
+                    <Scene
+                     key='reporting'
+                     component={ReportingForm}
+                     title="Incident Reporting"
                     />
                 </Scene> 
             </Scene>
